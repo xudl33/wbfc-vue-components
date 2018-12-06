@@ -9,7 +9,7 @@ import WbfcTablePage from './WbfcTablePage.js';
 
 export default {
 	version: '1.0.0',
-	name: 'WbfcComponents',
+	name: 'WbfcVueComponents',
 	install(Vue, options) {
 		options = options || {};
 		Vue.$wbfc = {};

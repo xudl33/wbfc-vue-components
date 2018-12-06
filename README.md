@@ -1,16 +1,16 @@
-# wbfc-components
+# wbfc-vue-components
 
 > 智源云组件库
 
-`Wbfc-Components`是一个基于`Wbfc`云服务架构的Vue框架，它提供了一些常用的工具函数以及基础表格和表单的共通封装。并且它还提供了网络请求的统一封装，可以对`wbfc`架构中使用的权限、返回值、错误码进行解析和自定义的操作。另外它还为网络请求提供了一个既可以统一访问，又可以自定义访问服务器的功能，更便于开发者对接口的调试和应对更为复杂的网络请求。
+`wbfc-vue-components`是一个基于`Wbfc`云服务架构的Vue框架，它提供了一些常用的工具函数以及基础表格和表单的共通封装。并且它还提供了网络请求的统一封装，可以对`wbfc`架构中使用的权限、返回值、错误码进行解析和自定义的操作。另外它还为网络请求提供了一个既可以统一访问，又可以自定义访问服务器的功能，更便于开发者对接口的调试和应对更为复杂的网络请求。
 ## 安装
 ```javascript
-npm install wbfc-components
+npm install wbfc-vue-components
 ```
 ## 使用Demo
 ```javascript
-import WbfcComponents from 'wbfc-components';
-Vue.use(WbfcComponents);
+import WbfcVueComponents from 'wbfc-vue-components';
+Vue.use(WbfcVueComponents);
 // ...
 // 添加一个错误码映射 999:系统异常
 Vue.$wbfc.Errors.addMapping('999', '系统异常');
@@ -29,7 +29,7 @@ Vue.$wbfc.ActionPath.addMatch({
 
 #### Demo
 ```javascript
-import WbfcDef from './WbfcDefaults';
+import WbfcDef from 'wbfc-vue-components/WbfcDefaults';
 export default {
 	data() {
 		return { // 定义接口规范
@@ -284,7 +284,7 @@ showLog|false|是否打印debug日志
 	</div>
 </template>
 <script>
-import WbfcTable from 'wbfc-components/WbfcTable';
+import WbfcTable from 'wbfc-vue-components/WbfcTable';
 import { generateId } from 'element-ui/lib/utils/util';
 export default {
 	name: 'TableTest',
@@ -384,7 +384,7 @@ flush|options:(见上文WbfcHttps.options), successFn:function, failedFn:functio
 	</div>
 </template>
 <script>
-import WbfcTablePage from '../../WbfcTablePage';
+import WbfcTablePage from 'wbfc-vue-components/WbfcTablePage';
 import { generateId } from 'element-ui/lib/utils/util';
 export default {
 	name: 'PageTest',
@@ -498,7 +498,7 @@ onPageSizeChange|但翻页每页条数改变 刷新Table数据
 	</div>
 </template>
 <script>
-import WbfcForm from '../../WbfcForm';
+import WbfcForm from 'wbfc-vue-components/WbfcForm';
 import { generateId } from 'element-ui/lib/utils/util';
 export default {
 	name: 'FormTest',
@@ -634,3 +634,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 版本|更新时间|更新说明
 ---|---|---
 1.0.0 | 2018/12/04 | 完成`wbfc-components`的基础功能
+1.0.1 | 2018/12/06 | 更名为`wbfc-vue-components`
