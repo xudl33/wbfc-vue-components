@@ -71,6 +71,7 @@ result|{}|返回值
 添加一个错误码
 
 ```javascript
+import Vue from 'vue';
 Vue.$wbfc.Errors.addMapping('921', '找不到对应项');
 ```
 
@@ -120,6 +121,7 @@ showLog|false|是否打印debug日志
 #### Demo
 增加一个服务器对于的转发规则
 ```javascript
+import Vue from 'vue';
 // 为system服务添加整体转发规则
 Vue.$wbfc.ActionPath.addMatch('system', {
 	urlReg: /\w*/i,// 匹配一个单字字符(字母、数字或者下划线) /i大小写不敏感
@@ -130,6 +132,7 @@ Vue.$wbfc.ActionPath.addMatch('system', {
 为某个服务添加一个自定义的转发规则
 
 ```javascript
+import Vue from 'vue';
 Vue.$wbfc.ActionPath.addMatch('system', {
 	urlReg: '/area/linkageList',
 	path: 'http://192.168.20.188:8090'
@@ -140,6 +143,7 @@ Vue.$wbfc.ActionPath.addMatch('system', {
 
 一次添加多个服务器对应的转发规则
 ```javascript
+import Vue from 'vue';
 Vue.$wbfc.ActionPath.addMatch({
 	security: {
 		regex: /^security/i,
@@ -208,15 +212,18 @@ _** matchs会按照数组的顺序进行匹配替换，如果一个url符合urlR
 
 ### WbfcHttps
 基于`wbfc`的规则，对网络请求统一封装了权限和返回值解析。
+
 #### Demo
 发送POST请求
 ```javascrpit
+import WbfcHttps from 'wbfc-vue-components/WbfcHttps';
 WbfcHttps.post('security:/i/user/get', {id:'1'}).then((r) =>{
 	this.vo.result = r.result;
 });
 ```
 发送POST请求并自定义异常处理
 ```javascrpit
+import WbfcHttps from 'wbfc-vue-components/WbfcHttps';
 WbfcHttps.post('security:/i/user/list', {noCatch: false}).then((r) =>{
 	this.vo.result = r.result;
 }).catch((c) =>{
@@ -226,6 +233,7 @@ WbfcHttps.post('security:/i/user/list', {noCatch: false}).then((r) =>{
 
 发送GET请求
 ```javascrpit
+import WbfcHttps from 'wbfc-vue-components/WbfcHttps';
 WbfcHttps.get('security:/i/user/get', {id:'1'}).then((r) =>{
 	this.vo.result = r.result;
 });
@@ -255,6 +263,104 @@ showErrorMessage|true|遇到错误时弹出提示 依赖于element-ui的Message
 concurrentMessage|false|并发多个请求时，是否允许多个Message显示框
 noCatch|true|请求返回的Promise可以不使用catch函数(因为拦截器有通用的错误处理方式，如果需要自处理异常信息，则可以在入参option中设置该值为false)
 showLog|false|是否打印debug日志
+
+### WbfcDicts
+封装了数据字典的相关函数，用来操作数据字典相关功能。
+
+#### Demo
+添加一个数据字典
+```javascrpit
+import Vue from 'vue';
+Vue.$wbfc.Dicts.addTypes('active_flag', [{
+	label: '激活',
+	value: '1'
+  },{
+	label: '未激活',
+	value: '0'
+  }]
+);
+```
+
+添加多个数据字典
+```javascrpit
+import Vue from 'vue';
+Vue.$wbfc.Dicts.addTypes({
+  'active_flag':[{
+	label: '激活',
+	value: '1'
+  },{
+	label: '未激活',
+	value: '0'
+  }]
+},{
+  'yes_no':[{
+	label: '是',
+	value: '1'
+  },{
+	label: '否',
+	value: '0'
+  }]
+});
+```
+
+#### API
+函数名|参数|返回值|说明
+----------|----------|---------|---------
+install|Vue:Vue对象,options(见下文Options)|-|初始化配置
+addTypes|label:String或({{xxx:[见下文Types)}]}, types:[{xxx:见下文Types)}]|-|添加数据字典，types必须是数组格式。
+getTypes|typ:String, options(见下文Options)|Array|获取某个数据字典列表
+getLabel|typ:String, val:String, options(见下文Options)|String|通过字典key和值查询标签
+getVal|typ:String, label:String, options(见下文Options)|String|通过字典key和标签查询值
+
+#### Options：
+名称|默认值|说明
+----|----|----
+datas|{}|数据字典JSON数据
+mapping|{见下文mapping}|数据字典键值映射
+default|-|获取某字典值或标签的默认值
+converter|-|获取某字典值或标签后会调用该转换器，参数为(typ, val, res, opt)
+showLog|false|是否显示debug日志
+
+#### Mapping:
+名称|默认值|说明
+----|----|----
+lab|label|标签
+val|value|值
+
+#### Types：
+名称|默认值|说明
+----|----|----
+
+
+### WbfcBase
+是WbfcTable和WbfcForm的基类，封装了form和table的共通函数，目前只定义了两个`filters`过滤器。
+
+#### Demo
+继承了WbfcBae、WbfcTable和WbfcForm的，都可以直接调用filters函数
+```javascript
+<template>
+	<div>
+		<div>
+			<el-table :data="vo.result" border>
+				<el-table-column prop="activeFlag" label="activeFlag" align="center">
+					<template slot-scope="{scope}">
+						{{'active_flag' | val2Lab(scope.row.activeFlag)}}
+					</template>
+				</el-table-column>
+				<el-table-column prop="authFlag" label="authFlag" align="center"></el-table-column>
+			</el-table>
+		</div>
+	</div>
+</template>
+import WbfcTable from 'wbfc-vue-components/WbfcTable';
+...
+```
+
+#### Filters：
+函数名|参数|返回值|说明
+----------|----------|---------|---------
+val2Lab|typ:String, val:String, options:(见上文WbfcDicts.Options)|String| 数据字典值转标签
+lab2Val|typ:String, lab:String, options:(见上文WbfcDicts.Options)|String| 数据字典标签转值
 
 ### WbfcTable
 封装了有关于Table相关组件的共通函数，并自动关联和绑定po与vo。
@@ -635,3 +741,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ---|---|---
 1.0.0 | 2018/12/04 | 完成`wbfc-components`的基础功能
 1.0.1 | 2018/12/06 | 更名为`wbfc-vue-components`
+1.0.2 | 2018/12/11 | 增加`WbfcDicts`(数据字典)的相关功能

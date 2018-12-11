@@ -1,8 +1,10 @@
 import $ from 'jQuery';
+import WbfcBase from './WbfcBase';
 import WbfcDef from './WbfcDefaults';
 import WbfcUtils from './WbfcUtils';
 import WbfcHttps from './WbfcHttps';
 export default {
+	mixins: [WbfcBase],
 	data() {
 		return { // 定义接口规范
 			url: '',

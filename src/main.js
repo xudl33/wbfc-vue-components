@@ -17,7 +17,18 @@ Vue.use(WbfcComponents, {
 	},
 	WbfcHttps: {
 		router: router
-	}
+	},
+  WbfcDicts:{
+    data: {
+      'active_flag':[{
+        label: '激活',
+        value: '1'
+      },{
+        label: '未激活',
+        value: '0'
+      }]
+    }
+  }
 });
 
 Vue.$wbfc.Errors.addMapping('999', 'aaa');

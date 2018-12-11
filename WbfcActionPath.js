@@ -126,6 +126,16 @@ export default {
 	addMapping(type, mapingObj) { // 添加mapping映射
 		if(type && mapingObj){
 			this.options.pathMaping[type] = mapingObj;
+		} else {
+			// 如果是对象的话
+			if(WbfcUtils.isObj(type)){
+				for(var i in type){
+					var mapObj = type[i];
+					if(WbfcUtils.isObj(mapObj)){
+						this.addMapping(i, mapObj);
+					}
+				}
+			}
 		}
 	},
 	deleleMapping(type){ // 删除mapping映射

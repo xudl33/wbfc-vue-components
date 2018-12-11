@@ -2,7 +2,11 @@
 	<div>
 		<div>
 			<el-table :data="vo.result" border>
-				<el-table-column prop="activeFlag" label="activeFlag" align="center"></el-table-column>
+				<el-table-column prop="activeFlag" label="activeFlag" align="center">
+					<template slot-scope="scope">
+						{{'active_flag' | val2Lab(scope.row.activeFlag)}}
+					</template>
+				</el-table-column>
 				<el-table-column prop="authFlag" label="authFlag" align="center"></el-table-column>
 				<el-table-column prop="availableDate" label="availableDate" align="center"></el-table-column>
 				<el-table-column prop="clientId" label="clientId" align="center"></el-table-column>

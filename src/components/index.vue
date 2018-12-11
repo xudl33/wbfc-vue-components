@@ -119,6 +119,29 @@ export default {
     });
 
     //console.log("Vue = %o", Vue.$wbfc);
+  },
+  mounted(){
+    this.$refs.tableTest.vo.result = [{
+      activeFlag: '1',
+      authFlag: '1',
+      availableDate: '1',
+      clientId: '1',
+      createDate: '1',
+      email: '1',
+      extend: {},
+      id: '1',
+      loginFlag: '1',
+      loginName: '1',
+      mobile: '1',
+      newExtend: '1',
+      openId: '1',
+      parentId: '1',
+      remarks: '1',
+      updateDate: '1',
+      userType: '1'
+    }];
+    Vue.$wbfc.Dicts.addTypes({'has_sec':[{lable:'有', value:'1'},{lable:'无',value:'0'}]});
+    console.log('has_sec=%o', Vue.$wbfc.Dicts.getTypes('has_sec'));
   }
 }
 </script>
