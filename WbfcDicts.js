@@ -34,7 +34,7 @@ export default {
 				}
 				return false;
 			}
-			this.options.data[label] = types;
+			this.options.datas[label] = types;
 		} else if(WbfcUtils.isObj(label)){
 			var temp = null;
 			for(var i in label){
@@ -55,7 +55,7 @@ export default {
 			opt = $.extend({}, opt, options);
 		}
 		/** 取得数据值字典中的标签 */
-		var dict = this.options.data;
+		var dict = this.options.datas;
 		// 取得数据字典
 		if(dict){
 			var typeArray = null;
@@ -82,7 +82,7 @@ export default {
 			opt = $.extend({}, opt, options);
 		}
 		/** 取得数据值字典中的标签 */
-		var dict = this.options.data;
+		var dict = this.options.datas;
 		// 取得数据字典
 		if(dict){
 			var res = null;

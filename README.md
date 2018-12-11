@@ -742,3 +742,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.0 | 2018/12/04 | 完成`wbfc-components`的基础功能
 1.0.1 | 2018/12/06 | 更名为`wbfc-vue-components`
 1.0.2 | 2018/12/11 | 增加`WbfcDicts`(数据字典)的相关功能
+1.0.3 | 2018/12/11 | 修正手动添加数据字典值data设置不正确的问题
