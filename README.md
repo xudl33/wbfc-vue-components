@@ -743,3 +743,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.1 | 2018/12/06 | 更名为`wbfc-vue-components`
 1.0.2 | 2018/12/11 | 增加`WbfcDicts`(数据字典)的相关功能
 1.0.3 | 2018/12/11 | 修正手动添加数据字典值data设置不正确的问题
+1.0.4 | 2018/12/27 | 修正axios引用名称风格不一致导致警告的问题

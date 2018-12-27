@@ -1,4 +1,4 @@
-import axios from 'Axios'               // 引入axios
+import axios from 'axios'               // 引入axios
 import { Message } from 'element-ui';                    // 引入ele-ui的消息提示部分
 import $ from 'jQuery';
 import WbfcUtils from './WbfcUtils';
