@@ -22,6 +22,50 @@ Vue.$wbfc.ActionPath.addMatch({
   }
 });
 ```
+如果有需要在初始化就全局修改的参数，可以通过`Vue.use`函数设置
+```javascript
+import router from './router'
+Vue.use(WbfcVueComponents, {
+  WbfcActionPath:{
+  	pathMaping: { // 设置全局ActionPath基础服务映射
+  		security: {
+			regex: /^security/i, // 必须是正则
+			matchs: [{ // 可以是一个固定的字符串 例:127.0.0.1:8089，也可以是一个数组[{urlReg:'', path:''}]
+				urlReg: /\w*/, // 可以是正则 也可以是字符串
+				path: 'http://192.168.20.5:1106/security'
+			}] // matchs会按照数组的顺序进行匹配替换，如果一个url符合urlReg的规则就会被替换成相应的path，但若下一个match也符合就会被重新替换
+		},
+		system: {
+			regex: /^system/i,
+			matchs: [{
+				urlReg: /\w*/,
+				path: 'http://192.168.20.5:1106/system'
+			}]
+		}
+  	}
+  },
+  WbfcErrors: {
+	showLog: true // 开启WbfcErrors的debug日志功能
+  },
+  WbfcHttps: {
+    showLog: true, // 开启WbfcHttps的debug日志功能
+    withRoute: true, // 开启使用路由器进行权限跳转功能
+    router: router // 设置路由器
+  },
+  WbfcDicts:{ 
+    showLog: true, // 开启WbfcDicts的debug日志功能
+    data: { // 设置全局数据字典
+      'active_flag':[{
+        label: '激活',
+        value: '1'
+      },{
+        label: '未激活',
+        value: '0'
+      }]
+    }
+  }
+});
+```
 
 ## 组件功能
 ### WbfcDefaults
