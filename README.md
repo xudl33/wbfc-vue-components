@@ -377,10 +377,10 @@ val|value|值
 
 
 ### WbfcBase
-是WbfcTable和WbfcForm的基类，封装了form和table的共通函数，目前只定义了两个`filters`过滤器。
+是WbfcTable和WbfcForm的基类，封装了form和table的共通`filters`(过滤器)函数。
 
 #### Demo
-继承了WbfcBae、WbfcTable和WbfcForm的，都可以直接调用filters函数
+继承了WbfcBae、WbfcTable和WbfcForm的，都可以直接调用filters过滤器
 ```javascript
 <template>
 	<div>
@@ -760,6 +760,7 @@ hex_md5|s:string|string|将字符串进行md5加密
 getCookie|name:string|string|获取cookies
 setCookie|name:string|-|设置cookies
 delCookie|name:string|-|删除cookies
+dateFormat|date:date, format:string|日期格式化(y-年 M-月 q-季度 d-日 H-时 m-分 s秒 S毫秒)
 
 
 ## Build Setup
@@ -788,3 +789,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.2 | 2018/12/11 | 增加`WbfcDicts`(数据字典)的相关功能
 1.0.3 | 2018/12/11 | 修正手动添加数据字典值data设置不正确的问题
 1.0.4 | 2018/12/27 | 修正axios引用名称风格不一致导致警告的问题
+1.0.5 | 2019/01/10 | 为util和filter增加dateFormat函数
