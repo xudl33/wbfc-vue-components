@@ -20,5 +20,6 @@ export default {
 		Vue.use(WbfcErrors, options.WbfcErrors);
 		Vue.use(WbfcHttps, options.WbfcHttps);
 		Vue.use(WbfcDicts, options.WbfcDicts);
+		Vue.use(WbfcBase, options.WbfcBase);
 	}
 }

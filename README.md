@@ -54,7 +54,7 @@ Vue.use(WbfcVueComponents, {
   },
   WbfcDicts:{ 
     showLog: true, // 开启WbfcDicts的debug日志功能
-    data: { // 设置全局数据字典
+    datas: { // 设置全局数据字典
       'active_flag':[{
         label: '激活',
         value: '1'
@@ -790,3 +790,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.3 | 2018/12/11 | 修正手动添加数据字典值data设置不正确的问题
 1.0.4 | 2018/12/27 | 修正axios引用名称风格不一致导致警告的问题
 1.0.5 | 2019/01/10 | 为util和filter增加dateFormat函数
+1.0.6 | 2019/02/19 | 修正ActionPath默认install不会覆盖pathMapping的问题；增加自定义全局filter的功能；

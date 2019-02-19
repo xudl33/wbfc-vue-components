@@ -4,33 +4,34 @@ import WbfcUtils from './WbfcUtils';
 var defaultsOptions = {
 	dynamicPath: true, // 动态URL true时会更加pathMaping动态生成url 一般用于多服务的情况
 	staticPath: 'http://127.0.0.1', // 静态URL配置如果dynamicPaths=false则全部的path都会在前拼接 一般这样的用于单服务的情况
+	dynamicRoot: 'http://127.0.0.1', // 动态URL根目录
 	pathMaping: {
 		security: {
 			regex: /^security/i,
 			matchs: [{ // 可以是一个固定的字符串 例:127.0.0.1:8089，也可以是一个数组[{urlReg:'', path:''}]
 				urlReg: /\w*/, // 可以是正则 也可以是字符串
-				path: 'http://192.168.20.5:1106/security'
+				path: ''
 			}] // matchs会按照数组的顺序进行匹配替换，如果一个url符合urlReg的规则就会被替换成相应的path，但若下一个match也符合就会被重新替换
 		},
 		system: {
 			regex: /^system/i,
 			matchs: [{
 				urlReg: /\w*/,
-				path: 'http://192.168.20.5:1106/system'
+				path: ''
 			}]
 		},
 		files: {
 			regex: /^files/i,
 			matchs: [{
 				urlReg: /\w*/,
-				path: 'http://192.168.20.5:1106/files'
+				path: ''
 			}]
 		},
 		ofim: {
 			regex: /^ofim/i,
 			matchs: [{
 				urlReg: /\w*/,
-				path: 'http://192.168.20.5:1106/ofim'
+				path: ''
 			}]
 		}
 	}
@@ -69,6 +70,10 @@ export default {
 			Vue.$wbfc.ActionPath = this;
 		}
 	},
+	setRoot(rootPath){
+		// 设置根目录
+		this.options.dynamicRoot = rootPath;
+	},
 	get(url){
 		// 动态的url必须以'xxx:'开头
 		var subIndex = url.indexOf(':');
@@ -80,9 +85,9 @@ export default {
 		if(targetUrl){
 			// 动态的需要重新计算
 			if(this.options.dynamicPath){
-				for(var i in defaultsOptions.pathMaping) {
-					var regex = defaultsOptions.pathMaping[i].regex;
-					var matchs = defaultsOptions.pathMaping[i].matchs;
+				for(var i in this.options.pathMaping) {
+					var regex = this.options.pathMaping[i].regex;
+					var matchs = this.options.pathMaping[i].matchs;
 					// 正则和匹配表必须存在的情况下再进行匹配算法
 					if(regex && matchs){
 						// contextPath符合就跳出循环
@@ -113,6 +118,11 @@ export default {
 							break;
 						}
 					}
+				}
+				// 如果没有匹配到任何结果，就用根目录
+				if(!targetUrl){
+					// 默认的转发是根目录
+					targetUrl = (this.options.dynamicRoot + targetUrl);
 				}
 			} else {
 				// 静态的需要拼接staticPath
