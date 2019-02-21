@@ -163,6 +163,43 @@ showLog|false|是否打印debug日志
 用于接口转发管理，它会按照统一或自定义的转发规则，在进行网络请求时进行URL的转换。默认情况下通过`WbfcHttps`组件发起的网络请求，都会使用`WbfcActionPath`。
 
 #### Demo
+设置默认统一的转发服务器
+```javascript
+Vue.use(WbfcVueComponents, {
+	WbfcActionPath:{
+		dynamicPath: false,
+		staticPath: "http://localhost:7066"
+	}
+}
+```
+
+设置默认统一的动态的转发服务器
+```javascript
+Vue.use(WbfcVueComponents, {
+	WbfcActionPath:{
+		dynamicRoot: "http://localhost:7066"
+	}
+}
+```
+
+设置统一和自定义并存的动态的转发服务器
+```javascript
+Vue.use(WbfcVueComponents, {
+	WbfcActionPath:{
+		dynamicRoot: "http://localhost:7067",
+		pathMaping: { // 设置全局ActionPath基础服务映射
+	  		security: {
+				regex: /^security/i, // 必须是正则
+				matchs: [{ // 可以是一个固定的字符串 例:127.0.0.1:8089，也可以是一个数组[{urlReg:'', path:''}]
+					urlReg: /\w*/, // 可以是正则 也可以是字符串
+					path: 'http://localhost:7066'
+				}] // matchs会按照数组的顺序进行匹配替换，如果一个url符合urlReg的规则就会被替换成相应的path，但若下一个match也符合就会被重新替换
+			}
+	  	}
+	}
+}
+```
+
 增加一个服务器对于的转发规则
 ```javascript
 import Vue from 'vue';
@@ -802,3 +839,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.5 | 2019/01/10 | 为util和filter增加dateFormat函数
 1.0.6 | 2019/02/19 | 修正ActionPath默认install不会覆盖pathMapping的问题；增加自定义全局filter的功能；
 1.0.7 | 2019/02/21 | 增加WbfcForm、WbfcTable和WbfcTablePage的change事件功能；
+1.0.8 | 2019/02/21 | 增加ActionPath动态转发时可以设置统一根目录dynamicRoot的功能

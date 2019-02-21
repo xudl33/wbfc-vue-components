@@ -6,34 +6,34 @@ var defaultsOptions = {
 	staticPath: 'http://127.0.0.1', // 静态URL配置如果dynamicPaths=false则全部的path都会在前拼接 一般这样的用于单服务的情况
 	dynamicRoot: 'http://127.0.0.1', // 动态URL根目录
 	pathMaping: {
-		security: {
-			regex: /^security/i,
-			matchs: [{ // 可以是一个固定的字符串 例:127.0.0.1:8089，也可以是一个数组[{urlReg:'', path:''}]
-				urlReg: /\w*/, // 可以是正则 也可以是字符串
-				path: ''
-			}] // matchs会按照数组的顺序进行匹配替换，如果一个url符合urlReg的规则就会被替换成相应的path，但若下一个match也符合就会被重新替换
-		},
-		system: {
-			regex: /^system/i,
-			matchs: [{
-				urlReg: /\w*/,
-				path: ''
-			}]
-		},
-		files: {
-			regex: /^files/i,
-			matchs: [{
-				urlReg: /\w*/,
-				path: ''
-			}]
-		},
-		ofim: {
-			regex: /^ofim/i,
-			matchs: [{
-				urlReg: /\w*/,
-				path: ''
-			}]
-		}
+		//security: {
+		//	regex: /^security/i,
+		//	matchs: [{ // 可以是一个固定的字符串 例:127.0.0.1:8089，也可以是一个数组[{urlReg:'', path:''}]
+		//		urlReg: /\w*/, // 可以是正则 也可以是字符串
+		//		path: ''
+		//	}] // matchs会按照数组的顺序进行匹配替换，如果一个url符合urlReg的规则就会被替换成相应的path，但若下一个match也符合就会被重新替换
+		//},
+		//system: {
+		//	regex: /^system/i,
+		//	matchs: [{
+		//		urlReg: /\w*/,
+		//		path: ''
+		//	}]
+		//},
+		//files: {
+		//	regex: /^files/i,
+		//	matchs: [{
+		//		urlReg: /\w*/,
+		//		path: ''
+		//	}]
+		//},
+		//ofim: {
+		//	regex: /^ofim/i,
+		//	matchs: [{
+		//		urlReg: /\w*/,
+		//		path: ''
+		//	}]
+		//}
 	}
 };
 
@@ -82,6 +82,7 @@ export default {
 		}
 		var contextType = url.substring(0, subIndex);
 		var targetUrl = url.substring(subIndex + 1);
+		var relativeUrl = targetUrl;
 		if(targetUrl){
 			// 动态的需要重新计算
 			if(this.options.dynamicPath){
@@ -120,7 +121,7 @@ export default {
 					}
 				}
 				// 如果没有匹配到任何结果，就用根目录
-				if(!targetUrl){
+				if(relativeUrl === targetUrl){
 					// 默认的转发是根目录
 					targetUrl = (this.options.dynamicRoot + targetUrl);
 				}
