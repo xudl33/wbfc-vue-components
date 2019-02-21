@@ -38,22 +38,27 @@ export default {
 			return this.vo.result || WbfcDef.DefaultTableVal();
 		},
 		flush(options, successFn, failedFn) {
+			var _this = this;
 			// 如果使用catch的话，需要写failedFn
 			if(options && !options.noCatch && failedFn){
-				WbfcHttps.post(this.url, this.po, options).then((r) =>{
-					this.vo.result = r.result;
+				WbfcHttps.post(_this.url, _this.po, options).then((r) =>{
+					_this.vo.result = r.result;
 					if(successFn){
-						successFn.call(this, r);
+						successFn.call(_this, r);
 					}
+					// 触发change事件
+					_this.$emit('change', _this, options, _this.po, r);
 				}).catch((c) =>{
-					failedFn.call(this, c);
+					failedFn.call(_this, c);
 				});
 			} else {
-				WbfcHttps.post(this.url, this.po, options).then((r) =>{
-					this.vo.result = r.result;
+				WbfcHttps.post(_this.url, _this.po, options).then((r) =>{
+					_this.vo.result = r.result;
 					if(successFn){
-						successFn.call(this, r);
+						successFn.call(_this, r);
 					}
+					// 触发change事件
+					_this.$emit('change', _this, options, _this.po, r);
 				});
 			}
 		}

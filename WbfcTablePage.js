@@ -50,32 +50,37 @@ export default {
 			this.flush(options);
 		},
 		flush(options, successFn, failedFn) {
+			var _this = this;
 			// 如果使用catch的话，需要写failedFn
 			if(options && !options.noCatch && failedFn){
-				WbfcHttps.post(this.url, this.po, options).then((r) =>{
+				WbfcHttps.post(_this.url, _this.po, options).then((r) =>{
 					// 刷新list
-					this.vo.result = r.result.list;
+					_this.vo.result = r.result.list;
 					// 刷新翻页总数
-					this.po.pageInfo.count = Number(r.result.count);
+					_this.po.pageInfo.count = Number(r.result.count);
 					// 刷新每页多少条
-					this.po.pageInfo.pageSize = Number(r.result.pageSize);
+					_this.po.pageInfo.pageSize = Number(r.result.pageSize);
 					if(successFn){
-						successFn.call(this, r);
+						successFn.call(_this, r);
 					}
+					// 触发change事件
+					_this.$emit('change', _this, options, _this.po, r);
 				}).catch((c) =>{
-					failedFn.call(this, c);
+					failedFn.call(_this, c);
 				});
 			} else {
-				WbfcHttps.post(this.url, this.po, options).then((r) =>{
+				WbfcHttps.post(_this.url, _this.po, options).then((r) =>{
 					// 刷新list
-					this.vo.result = r.result.list;
+					_this.vo.result = r.result.list;
 					// 刷新翻页总数
-					this.po.pageInfo.count = Number(r.result.count);
+					_this.po.pageInfo.count = Number(r.result.count);
 					// 刷新每页多少条
-					this.po.pageInfo.pageSize = Number(r.result.pageSize);
+					_this.po.pageInfo.pageSize = Number(r.result.pageSize);
 					if(successFn){
-						successFn.call(this, r);
+						successFn.call(_this, r);
 					}
+					// 触发change事件
+					_this.$emit('change', _this, options, _this.po, r);
 				});
 			}
 		}

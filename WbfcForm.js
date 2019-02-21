@@ -81,20 +81,24 @@ export default {
 			var _this = this;
 			// 如果使用catch的话，需要写failedFn
 			if(options && !options.noCatch && failedFn){
-				WbfcHttps.post(_this.url, _this.po, options).then((r) =>{
+				WbfcHttps.post(_this.url, _this.po, options).then((r) => {
 					_this.vo = r;
 					if(successFn){
 						successFn.call(_this, r);
 					}
+					// 触发change事件
+					_this.$emit('change', _this, options, _this.po, r);
 				}).catch((c) =>{
 					failedFn.call(_this, c);
 				});
 			} else {					
-				WbfcHttps.post(_this.url, _this.po, options).then((r) =>{
+				WbfcHttps.post(_this.url, _this.po, options).then((r) => {
 					_this.vo = r;
 					if(successFn){
 						successFn.call(_this, r);
 					}
+					// 触发change事件
+					_this.$emit('change', _this, options, _this.po, r);
 				});
 			}
 		},

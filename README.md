@@ -495,6 +495,10 @@ flush|options:(见上文WbfcHttps.options), successFn:function, failedFn:functio
 
 > 以上函数除flush外，均无网络请求
 
+#### 事件
+事件名|说明
+----------|----------
+change|flush成功后触发
 
 ### WbfcTablePage
 封装了有关于Table和Pagination相关组件的共通函数，并自动关联和绑定po与vo。
@@ -601,6 +605,7 @@ flush|options:(见上文WbfcHttps.options), successFn:function, failedFn:functio
 #### 事件
 事件名|说明
 ----------|----------
+change|flush成功后触发
 onPageChange|当翻页页码改变 刷新Table数据
 onPageSizeChange|但翻页每页条数改变 刷新Table数据
 
@@ -721,6 +726,11 @@ clean|-|-|清除表单(只会清除校验消息)
 noValidSubmit|options:(见上文WbfcHttps.options), successFn:function, failedFn:function|-|提交表单(不进行校验)
 submit|options:(见上文WbfcHttps.options), successFn:function, failedFn:function|-|提交表单
 
+#### 事件
+事件名|说明
+----------|----------
+change|submit和noValidSubmit成功后触发
+
 > 以上函数除noValidSubmit和submit外，均无网络请求
 
 ### WbfcUtils
@@ -791,3 +801,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.4 | 2018/12/27 | 修正axios引用名称风格不一致导致警告的问题
 1.0.5 | 2019/01/10 | 为util和filter增加dateFormat函数
 1.0.6 | 2019/02/19 | 修正ActionPath默认install不会覆盖pathMapping的问题；增加自定义全局filter的功能；
+1.0.7 | 2019/02/21 | 增加WbfcForm、WbfcTable和WbfcTablePage的change事件功能；
