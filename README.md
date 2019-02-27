@@ -220,7 +220,7 @@ Vue.$wbfc.ActionPath.addMatch('system', {
 });
 ```
 
-> 如果在上面的转发规则都生效的前提下，这个新增的规则会被添加到转发堆栈的最后。也就是说所有以`system:`开头的请求，都会转发到`http://192.168.20.5:1106/system`,但只有`/area/linkageList`这个请求会被转发到`http://192.168.20.188:8090`
+> 如果在上面的转发规则都生效的前提下，这个新增的规则会被添加到转发堆栈的最后。也就是说所有以`system:`开头的请求，都会转发到`http://192.168.20.5:1106/system`,但只有`/area/linkageList`这个请求会被转发到`http://192.168.20.188:8090`。另外，在调用addMatch或setMatch函数前，必须保证`pathMapping[type]`是一个合法的数据项，否则会报错找不到pathMapping。
 
 一次添加多个服务器对应的转发规则
 ```javascript
@@ -442,6 +442,8 @@ import WbfcTable from 'wbfc-vue-components/WbfcTable';
 ----------|----------|---------|---------
 val2Lab|typ:String, val:String, options:(见上文WbfcDicts.Options)|String| 数据字典值转标签
 lab2Val|typ:String, lab:String, options:(见上文WbfcDicts.Options)|String| 数据字典标签转值
+dateFormat|date:date, format:string|String|日期格式化(y-年 M-月 q-季度 d-日 H-时 m-分 s秒 S毫秒)
+
 
 ### WbfcTable
 封装了有关于Table相关组件的共通函数，并自动关联和绑定po与vo。
@@ -840,3 +842,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.6 | 2019/02/19 | 修正ActionPath默认install不会覆盖pathMapping的问题；增加自定义全局filter的功能；
 1.0.7 | 2019/02/21 | 增加WbfcForm、WbfcTable和WbfcTablePage的change事件功能；
 1.0.8 | 2019/02/21 | 增加ActionPath动态转发时可以设置统一根目录dynamicRoot的功能
+1.0.9 | 2019/02/27 | 增加Actinpath的addMatch和setMach函数中校验pathMapping不存在时打印日志的功能；增加readme说明；

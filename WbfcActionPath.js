@@ -157,6 +157,8 @@ export default {
 			var mapping = this.options.pathMaping[type];
 			if(mapping && mapping.regex){
 				this.options.pathMaping[type].matchs = matchs;
+			} else {
+				console.error("pathMaping[%s] not exists,please use 'addMapping' to add one of pathMapping before", type);
 			}
 		}
 	},
@@ -165,6 +167,8 @@ export default {
 			var mapping = this.options.pathMaping[type] || {};
 			if(mapping && mapping.regex && WbfcUtils.isArray(mapping.matchs)){
 				this.options.pathMaping[type].matchs.push(match);
+			} else {
+				console.error("pathMaping[%s] not exists,please use 'addMapping' to add one of pathMapping before", type);
 			}
 		} else {
 			// 如果是对象的话
