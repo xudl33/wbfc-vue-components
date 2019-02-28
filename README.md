@@ -844,3 +844,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1.0.8 | 2019/02/21 | 增加ActionPath动态转发时可以设置统一根目录dynamicRoot的功能
 1.0.9 | 2019/02/27 | 增加Actinpath的addMatch和setMach函数中校验pathMapping不存在时打印日志的功能；增加readme说明；
 1.1.0 | 2019/02/28 | 修正Actinpath的addMatch时已经存在的match没有被覆盖的问题;增加util的jQuery返回值和syncLock;
+1.1.1 | 2019/02/28 | 增加Form、Table和TablePage的beforeChange函数;

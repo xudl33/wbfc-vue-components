@@ -12,6 +12,13 @@ export default {
 			vo: WbfcDef.ResultPojo(),
 		}
 	},
+	props:{
+		beforeChange: {
+			type: Function,
+			default: null,
+			required: false
+		}
+	},
 	watch:{
 		// 监控vo.result的值变化
 		'vo.result': {
@@ -39,6 +46,21 @@ export default {
 		},
 		flush(options, successFn, failedFn) {
 			var _this = this;
+			var beforeChangeEvent = _this.beforeChange;
+			if(options && options.beforeChange){
+				beforeChangeEvent = options.beforeChange;
+			}
+			// 如果有beforeChange事件 需要先执行
+			if(beforeChangeEvent){
+				var res = beforeChangeEvent.call(_this, options);
+				// 如果返回了false 则不继续进行
+				if(res === false){
+					if(options && !options.noCatch && failedFn){
+						failedFn.call(_this, new Error("beforeChange return false"));
+					}
+					return;
+				}
+			}
 			// 如果使用catch的话，需要写failedFn
 			if(options && !options.noCatch && failedFn){
 				WbfcHttps.post(_this.url, _this.po, options).then((r) =>{
