@@ -166,6 +166,8 @@ export default {
 		if(type && match){
 			var mapping = this.options.pathMaping[type] || {};
 			if(mapping && mapping.regex && WbfcUtils.isArray(mapping.matchs)){
+				// 如果match存在就删除后再添加
+				WbfcUtils.removeArrayItem(this.options.pathMaping[type].matchs, match);
 				this.options.pathMaping[type].matchs.push(match);
 			} else {
 				console.error("pathMaping[%s] not exists,please use 'addMapping' to add one of pathMapping before", type);

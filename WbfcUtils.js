@@ -1,4 +1,5 @@
 'use strict';
+import jQuery from 'jQuery';
 
 function isObj(object) {
     return object && typeof(object) === 'object' && Object.prototype.toString.call(object).toLowerCase() === "[object object]";
@@ -394,6 +395,68 @@ String.prototype.endWith = function(str){
 	}
 }
 
+jQuery.extend({
+	// 同步锁(锁对象，锁表达式)
+	syncLock : function(expressOrOptions, callback, options, timeoutHandler) {
+		var opt = null;
+		if(jQuery.isFunction(expressOrOptions, callback)){
+			var loopCount = -1;
+			if(timeoutHandler){
+				loopCount = jQuery.syncLock.defaults.maxItera
+			}
+			opt = jQuery.extend(jQuery.syncLock.defaults, {
+				'maxItera': loopCount,
+				'express': expressOrOptions,
+				'callBack': callback,
+				'timeoutHandler': timeoutHandler
+			}, options);
+		} else {
+			opt = jQuery.extend({}, jQuery.syncLock.defaults, expressOrOptions);
+		}
+		
+		// 表达式和回调不能为空
+		if(opt.express && opt.callBack && jQuery.isFunction(opt.express) && jQuery.isFunction(opt.callBack)){
+			var reTryMax = opt.maxItera;
+			var retry = 0;
+			// 校验表达式 表达式为真加载停止
+			if(!opt.express()){
+				var intVel = null;
+				intVel = setInterval(function(){
+					// 超过等待次数停止
+					if(reTryMax >= 0 && retry >= reTryMax){
+						clearInterval(intVel);
+						// 超时回调
+						if(opt.timeoutHandler){
+							opt.timeoutHandler();
+						}
+						return;
+					}
+					// 校验表达式 表达式为真加载停止
+					if(opt.express()){
+						clearInterval(intVel);
+						// 回调
+						opt.callBack();
+					}
+					retry++;
+				}, opt.flush);
+			} else {
+				// 回调
+				opt.callBack();
+			}
+		}
+	}
+});
+
+// express表达式函数，callBack回调函数，flush刷新频率，maxItera 迭代次数
+jQuery.syncLock.defaults = {
+	"express" : null, // 表达式函数 返回false继续等待，返回非null,undefined和"" 都会认为等待结束，进行callBack回调
+	"callBack" : null,// 回调函数
+	"timeoutHandler" : null,// 超时回调函数 超时时间=flush*maxItera
+	"flush" : 500, // 同步周期(单位:毫秒)
+	"maxItera" : 6 // 最大重试次数 若maxItera<0 则会无限等待，直到express有返回值
+};
+
+
 export default {
 	install(Vue, options) {
 		if(Vue.$wbfc){
@@ -410,5 +473,7 @@ export default {
     dateFormat,
     getCookie,
     setCookie,
-    delCookie
+    delCookie,
+    jQuery,
+    syncLock: jQuery.syncLock
 }
