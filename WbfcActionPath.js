@@ -86,6 +86,7 @@ export default {
 		if(targetUrl){
 			// 动态的需要重新计算
 			if(this.options.dynamicPath){
+				var deepUrl = '';
 				for(var i in this.options.pathMaping) {
 					var regex = this.options.pathMaping[i].regex;
 					var matchs = this.options.pathMaping[i].matchs;
@@ -96,30 +97,27 @@ export default {
 							var mcType = typeof matchs;
 							// 如果时候字符串就直接拼接返回
 							if (mcType === 'string') {
-								targetUrl = (matchs + targetUrl);
-								break;
+								deepUrl = (matchs + targetUrl);
 							} else if (WbfcUtils.isArray(matchs)) {
 								// 如果是数组就遍历
-								var tempTarUrl = targetUrl;
 								matchs.forEach((n, i) => {
 									var tmpUrl = getMatchUrl(n, targetUrl);
 									if(tmpUrl){
-										tempTarUrl = tmpUrl;
+										deepUrl = tmpUrl;
 									}
 								});
-								// 覆盖原Url
-								targetUrl = tempTarUrl;
 							} else if (WbfcUtils.isObj(matchs)){
 								// 如果直接是match对象就直接用
 								var tmpUrl = getMatchUrl(matchs, targetUrl);
 								if(tmpUrl){
-									targetUrl = tmpUrl;
+									deepUrl = tmpUrl;
 								}
 							}
-							break;
 						}
 					}
 				}
+				// 覆盖原Url
+				targetUrl = deepUrl;
 				// 如果没有匹配到任何结果，就用根目录
 				if(relativeUrl === targetUrl){
 					// 默认的转发是根目录
